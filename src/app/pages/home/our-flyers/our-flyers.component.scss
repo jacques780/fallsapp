@@ -1,0 +1,74 @@
+ion-content {
+  --background: url('/assets/img/bg.jpg') no-repeat center center / cover;
+}
+.toolbar-background {
+  --background: #3b5998;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 8px 16px 0 rgba(0, 0, 0, 0.09);
+  ion-button {
+    color: whitesmoke;
+  }
+  .title-text {
+    color: whitesmoke;
+  }
+}
+
+.pdf-error {
+  height: 50px;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+}
+
+.horizontal {
+  ::ng-deep {
+    .pdfViewer {
+      display: flex !important;
+    }
+  }
+}
+.view-double {
+  ::ng-deep {
+    .pdfViewer {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-column-gap: 10px;
+      grid-row-gap: 10px;
+    }
+  }
+}
+.view-grid {
+  ::ng-deep {
+    .pdfViewer {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-column-gap: 10px;
+      grid-row-gap: 10px;
+    }
+  }
+}
+ion-content {
+  .pdf-action {
+    position: absolute;
+    bottom: 0;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+
+    .button {
+      width: 45px;
+      --background: rgba(17, 17, 17, 1);
+      opacity: 0.3;
+      transition: opacity 0.3s;
+
+      &:active {
+        opacity: 1;
+      }
+    }
+  }
+}

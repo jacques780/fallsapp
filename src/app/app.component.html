@@ -1,0 +1,16 @@
+<ion-app>
+  <div class="splash" #splash [hidden]="splashDone">
+    <div>
+      <img src="/assets/img/falls_logo.png" class="splashlogo">
+    </div>
+    <div class="loader">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+
+  <ion-router-outlet [hidden]="!splashDone"></ion-router-outlet>
+</ion-app>

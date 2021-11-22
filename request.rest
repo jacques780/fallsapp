@@ -1,0 +1,82 @@
+@url = http://api.hydesdirect.com/service/api.php?
+############################ Authentication ############################
+
+###
+### Example user 1
+### 
+POST {{url}}postfallslogin=1
+Content-Type: application/x-www-form-urlencoded
+
+user_name=notfound@whatever.com&password=Test123
+
+###
+### Example user 2
+### 
+POST {{url}}postfallslogin=1
+Content-Type: application/x-www-form-urlencoded
+
+user_name=boris@fallswholesale.com&password=falls123
+
+###
+### Example user 3
+### 
+POST {{url}}postfallslogin=1
+Content-Type: application/x-www-form-urlencoded
+
+user_name=nadia@fallswholesale.com&password=falls123
+
+### Note: login_result is 0 => not found 1 => disabled, 2 => ogin/user ok.
+
+############################ Order Product ############################
+POST {{url}}postgetproducts=1
+Content-Type: application/x-www-form-urlencoded
+
+autocomplete=act
+
+########### adding to cart . result = 1 if added or 0 if failed
+POST {{url}}addtocart=1
+Content-Type: application/x-www-form-urlencoded
+
+product=82694010176&qty=2&email_address=user@whatever.com
+
+########### product info . total_results = either 1 or 0, found or not
+POST {{url}}postgetproductinfo=1
+Content-Type: application/x-www-form-urlencoded
+
+mw_code=82694010176
+
+########### submitting the order . submit_result = 1 or 0 for success or fail
+POST {{url}}postsubmitorder=1
+Content-Type: application/x-www-form-urlencoded
+
+email_address=boris@fallswholesale.com
+
+########## Delete from Cart . result = 1 all the time
+POST {{url}}postdelcartitem=1
+Content-Type: application/x-www-form-urlencoded
+
+product=CODE&email_address=user@whatever.com
+
+########### GET Cart . result should always be 1 even if empty
+POST {{url}}postgetcart=1
+Content-Type: application/x-www-form-urlencoded
+
+email_address=nadia@fallswholesale.com
+
+########### 
+POST {{url}}postorderhistory=1
+Content-Type: application/x-www-form-urlencoded
+
+email_address=nadia@fallswholesale.com
+
+###########
+POST {{url}}updatecart=1
+Content-Type: application/x-www-form-urlencoded
+
+newcart={"code":"02550000197","qty":23}
+
+###########
+POST {{url}}addmetadata=1
+Content-Type: application/x-www-form-urlencoded
+
+email_address=nadia@fallswholesale.com

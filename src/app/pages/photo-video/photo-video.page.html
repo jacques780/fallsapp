@@ -1,0 +1,107 @@
+<ion-header no-border #header>
+  <ion-toolbar class="toolbar-background header">
+    <ion-buttons slot="start">
+      <ion-button (click)="sharedService.navigate('back', 'home')">
+        <ion-icon slot="start" name="ios-arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="title-text">{{headerText}}</ion-title>
+    <ion-buttons *ngIf="selection=='photos'" slot="end" (click)="this.onCallCamera();">
+      <fa-icon cardicon [icon]="['fas', 'camera']"></fa-icon>
+    </ion-buttons>
+    <ion-buttons *ngIf="selection=='videos'" slot="end" (click)="this.onCallVideo();">
+      <fa-icon cardicon [icon]="['fas', 'video']"></fa-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" slot="fixed" [scrollEvents]="true" [hideHeader]="header" [hideButton]="button">
+  <div class="empty-item" *ngIf="tiles.length < 1 && selection=='photos'">
+    <div>
+      <fa-icon cardicon [icon]="['fas', 'photo-video']"></fa-icon>
+    </div>
+    <div class="text">
+      No photo here
+    </div>    
+  </div>
+  <div class="empty-item" *ngIf="videos.length < 1 && selection=='videos'">
+    <div>
+      <fa-icon cardicon [icon]="['fas', 'photo-video']"></fa-icon>
+    </div>
+    <div class="text">
+      No video here
+    </div>    
+  </div>
+  <ion-grid class="i-grid">
+    <ion-row *ngIf="selection=='photos'" class="i-row">      
+      <ion-col class="i-col"
+        *ngFor="let tile of tiles"
+        [size]="6">
+        <div class="container" button (click)="presentModal(tile.id)">
+          <img class="image" [src]="tile.src ? 
+          sanitizer.bypassSecurityTrustResourceUrl('data:image/jpeg;base64,' +tile.src): tile.safeSrc? tile.safeSrc: '/assets/img/not-found.jpeg'">
+          <div class="overlay">         
+          </div>
+          <div class="text">
+            {{tile.name}}
+          </div>
+          <ion-button (click)="onClickRemoveImage($event, tile.id)" class="remove-btn"> 
+              <fa-icon [icon]="['fas', 'times']"></fa-icon>
+          </ion-button> 
+        </div>           
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="selection=='videos'" class="i-row">
+      <ion-col class="i-col-video"
+      *ngFor="let video of videos"
+      [size]="12">
+      <div class="empty-item" *ngIf="videos.length < 1">
+        <div>
+          <fa-icon cardicon [icon]="['fas', 'photo-video']"></fa-icon>
+        </div>
+        <div class="text">
+          No Photo here
+        </div>    
+      </div>
+        <ion-card class="i-card">
+          <ion-card-content>
+            <div class="video-container">
+              <video class="video" 
+              controls                
+              poster="/assets/img/transparent.png"> 
+                <source [src]="video.fullPath" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              
+              <div class="overlay-video">{{video.name}}</div>
+            </div>  
+          </ion-card-content>
+        </ion-card>
+      </ion-col>   
+      
+    </ion-row>
+  </ion-grid>    
+</ion-content>
+
+<ion-footer no-border>
+  <ion-row class="button-wrapper" #button>
+    <ion-col size="12" class="upload-btn">
+      <ion-button *ngIf="!isSendImagesVideos" (click)="uploadImagesPhotos()" class="i-button">
+          Send to Fallswholesale
+      </ion-button>
+      <ion-button *ngIf="isSendImagesVideos" class="loading">
+        <ion-spinner color="primary"></ion-spinner>
+      </ion-button>
+    </ion-col> 
+  </ion-row>  
+  <ion-toolbar>     
+    <ion-segment [(ngModel)]="selection" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="photos">
+        <ion-label>Photos</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="videos">
+        <ion-label>Videos</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-footer>

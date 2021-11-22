@@ -1,0 +1,1 @@
+export { OurFlyersComponent } from './our-flyers.component';

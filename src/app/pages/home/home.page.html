@@ -1,0 +1,58 @@
+<ion-header translucent no-border #header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="onLogOut()">
+        <ion-icon slot="end" name="ios-log-out"></ion-icon>
+        <b>Sign Out</b>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" slot="fixed" [scrollEvents]="true" [hideHeader]="header">
+  <br><br>
+  <ion-col>
+    <div class="card">
+      <div class="header">
+        <div class="logobox">
+          <img src="/assets/img/falls_logo.png" class="homelogo">
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="user-meta ion-text-center smallertoppadd">
+          <h3 class="playername">Falls Wholesale Home</h3>
+          <ion-grid>
+            <ng-container *ngFor="let paired_card of cardGridView">
+              <ion-row>
+                  <ion-col>
+                    <ion-card class="i-card-menu" (click)="gotoPage(paired_card.card1.page)">
+                      <div class="wrapper-inside-card">                        
+                        <fa-icon cardicon [icon]="[paired_card.card1.icon_type, paired_card.card1.icon]">                          
+                        </fa-icon>                        
+                        <div class="card-title">
+                          {{paired_card.card1.title}}
+                          <ng-container *ngIf="paired_card.card1.page=='notification'">
+                            ({{totalNotification}})
+                          </ng-container>
+                        </div>
+                      </div>
+                    </ion-card>
+                  </ion-col>
+                  <ion-col *ngIf="paired_card.card2">
+                    <ion-card class="i-card-menu" (click)="gotoPage(paired_card.card2.page)">
+                      <div class="wrapper-inside-card">
+                        <fa-icon cardicon [icon]="[paired_card.card2.icon_type, paired_card.card2.icon]"></fa-icon>
+                        <div class="card-title">
+                          {{paired_card.card2.title}}
+                        </div>                        
+                      </div>
+                    </ion-card>
+                  </ion-col>
+              </ion-row>
+            </ng-container>
+          </ion-grid>
+        </div>
+      </div>
+    </div>
+  </ion-col>
+</ion-content>

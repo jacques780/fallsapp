@@ -1,0 +1,63 @@
+<ion-header no-border #header>
+  <ion-toolbar class="toolbar-background header">
+    <ion-buttons slot="start">
+      <ion-button (click)="sharedService.navigate('back', 'home/buildOrder')">
+        <ion-icon slot="start" name="ios-arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="title-text">Product</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="loadBODetailsData()">
+        <ion-icon class="icon refresh" name="refresh"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true" slot="fixed" [scrollEvents]="true" [hideHeader]="header">
+  <ng-container *ngIf="productData.mw_code">
+    <ion-slides pager="true" [options]="slideOpts">
+      <ion-slide class="i-slide">
+        <ion-card class="i-card-item">
+          <img class="img-slide" [src]="imgSrc.changingThisBreaksApplicationSecurity? imgSrc: 'assets/img/not-found.jpeg'" />
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+    <ion-row>
+      <ion-col>
+        <ion-list class="i-list">
+          <div class="detailheader">
+            Product Details
+          </div>
+  
+          <ion-item lines="none" class="i-item"> 
+            <ion-label>
+              <h2>ID/SKU</h2>
+              <h3><b>{{productData.mw_code}}</b></h3>
+            </ion-label>
+          </ion-item>
+  
+          <ion-item lines="none" class="i-item"> 
+            <ion-label>
+              <h2>Product Name</h2>
+              <h3><b>{{productData.name}}</b></h3>
+            </ion-label>
+          </ion-item>
+  
+          <ion-item lines="none" class="i-item">
+            <ion-label>
+              <h2>Type</h2>
+              <h3><b>{{ productData.stocktype_ea_or_bx}}</b></h3>
+            </ion-label>
+          </ion-item>
+  
+          <ion-item lines="none" class="i-item">
+            <ion-label>
+              <h2>Price</h2>
+              <h3><b>${{productData.price | number: '1.2-2'}}</b></h3>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ng-container>
+</ion-content>

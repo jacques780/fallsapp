@@ -1,0 +1,103 @@
+ion-content {
+  --background: url(/assets/img/bg.jpg) no-repeat top center/cover fixed, #fff;
+  position: relative;
+  height: 100%;
+  width: 100%;
+
+  ion-button {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    color: #303940;
+  }
+}
+
+ion-header {
+  --background: transparent;
+  background: transparent;
+  position: absolute;
+}
+
+ion-toolbar {
+  --background: transparent;
+}
+
+ion-chip {
+  --background: #9dc912;
+  --color: #fff;
+}
+
+.card {
+  margin: 0 auto;
+
+  .header {
+    height: 85px;
+
+    .avatar {
+      width: 180px;
+      height: 180px;
+      position: relative;
+      margin: 0 auto;
+
+      img {
+        object-fit: cover;
+        width: 180px;
+        height: 180px;
+        display: block;
+        border-radius: 50%;
+        position: absolute;
+        bottom: -2px;
+        border: 8px solid rgba(1, 50, 67, 0.15);
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 8px 16px 0 rgba(0, 0, 0, 0.09);
+        background-color: #fff;
+        margin-bottom: 15px;
+      }
+    }
+  }
+}
+
+.card-body {
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 30px 0 30px 0;
+  height: 100%;
+  overflow: hidden;
+
+  .user-meta {
+    padding-top: 40px;
+
+    .playername {
+      font-size: 24px;
+      font-weight: 600;
+      color: #303940;
+    }
+
+    .country {
+      font-size: 90%;
+      color: #949ea6;
+      text-transform: uppercase;
+      margin: 0 auto;
+    }
+
+    .wrapper-inside-card {
+      height: 150px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      .card-title {
+        font-weight: bold;
+        color: rgba(1, 50, 67, 1);
+      }
+      fa-icon {
+        font-size: 56px;
+        &[cardicon] {
+          margin: 10px;
+          color: #3b5998;
+        }
+      }
+    }
+    .i-card-menu {
+      background-color: rgba(44, 130, 201, 0.15);
+      box-shadow: 0px 6px 12px 0 rgba(0, 0, 0, 0.1), 0 12px 24px 0 rgba(0, 0, 0, 0.09);
+    }
+  }
+}

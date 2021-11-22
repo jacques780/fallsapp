@@ -1,0 +1,58 @@
+<ion-header no-border>
+  <ion-toolbar class="toolbar-background">
+    <ion-buttons slot="start">
+      <ion-button (click)="sharedService.navigate('back', 'home')">
+        <ion-icon slot="start" name="ios-arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="title-text">Video Call</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="session" id="session">
+    <div id="video-container" class="col-md-6">
+      <div
+        *ngFor="let sub of subscribers"
+        class="stream-container col-md-6 col-xs-6"
+      >
+        <div >
+          <ov-video [streamManager]="sub"></ov-video>
+        </div>
+      </div>
+      <div class="waiting-text" [hidden]="subscribers.length>=1">
+        Please wait until someone joins you.
+      </div>
+      <div *ngIf="publisher" [hidden]="subscribers.length>=1" class="stream-container sub-video col-md-6 col-xs-6">
+        <div>
+          <ov-video [streamManager]="mainStreamManager"></ov-video>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-row *ngIf="session">
+    <ion-col>
+      <ion-button (click)="muteMic()" expand="block" class="re-order-btn mute-mic"><ng-container><fa-icon *ngIf="mute" cardicon [icon]="['fas', 'microphone']"></fa-icon><fa-icon *ngIf="!mute" cardicon [icon]="['fas', 'microphone-slash']"></fa-icon></ng-container></ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button (click)="muteAll()" expand="block" class="re-order-btn mute-all"><ng-container><fa-icon *ngIf="isMuteAll" cardicon [icon]="['fas', 'volume-up']"></fa-icon><fa-icon *ngIf="!isMuteAll" cardicon [icon]="['fas', 'volume-mute']"></fa-icon></ng-container></ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-toolbar>
+    <ion-button class="re-order-btn" [hidden]="session" color="primary" expand="block" (click)="call()">
+      <ng-container>
+        Call
+      </ng-container>
+      
+    </ion-button>
+    <ion-button class="re-order-btn" [hidden]="!session" color="danger" expand="block" (click)="hangup()">
+      <ng-container>
+        Disconnect
+      </ng-container>
+      
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

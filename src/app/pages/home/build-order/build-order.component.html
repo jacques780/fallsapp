@@ -1,0 +1,191 @@
+<ion-header class="dropdown" no-border #header>
+  <ion-toolbar *ngIf="!isSelectedMode" class="toolbar-background header">
+    <ion-buttons *ngIf="!isShowedSearch" slot="start">
+      <ion-button (click)="updateCartOnGoback();sharedService.navigate('back', 'home')">
+        <ion-icon slot="start" name="ios-arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title *ngIf="!isShowedSearch" class="title-text">Your Order</ion-title>
+    <ion-buttons *ngIf="!isShowedSearch" slot="end">      
+      <ion-button (click)="isShowedSearch=true;">
+        <ion-icon class="icon" name="search"></ion-icon>
+      </ion-button>
+      <ion-button (click)="initCart(true)">
+        <ion-icon class="icon refresh" name="refresh"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-item *ngIf="isShowedSearch">
+      <ion-icon *ngIf="inputText.value" (click)="inputText.setValue('')" name="close-circle" slot="end"></ion-icon>
+      <ion-icon class="i-icon-camera" (click)="onUserBarcodeScanner()" slot="end" name="qr-scanner"></ion-icon>
+      <ion-input 
+        [formControl]="inputText"
+        placeholder="Input SKU or product">
+      </ion-input>
+      <ion-icon *ngIf="isShowedSearch" (click)="isShowedSearch=false;isShowedDropdown=false;" name="close" slot="start"></ion-icon>
+    </ion-item>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="isShowedDropdown && !isSelectedMode" class="dropdown-content">
+    <div class="i-list">
+      <ng-container *ngFor="let item of resultProductsList">
+        <ion-item lines="none" (click)="addToCart(item.mw_code, '1')">
+          <ion-label>
+            <h2>{{item.name}}</h2>
+            <p>SKU: {{item.mw_code}}</p>
+            <p>Stock: {{item.mw_stockonhand | number}}</p>
+          </ion-label>
+        </ion-item>
+      </ng-container>  
+      <ion-item *ngIf="resultProductsList.length <= 0" lines="none">
+        <ion-label>
+          Not found
+        </ion-label>      
+      </ion-item>    
+    </div>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="isSelectedMode" class="toolbar2">
+    <ion-buttons slot="start">      
+      <ion-button slot="start" (click)="navCtrl.pop()">
+        <ion-icon class="i-icon" name="close" ></ion-icon>
+      </ion-button>    
+    </ion-buttons>    
+    <ion-text>{{countSelected}} selected</ion-text>
+    <ion-buttons slot="end">      
+      <ion-button *ngIf="!(countSelected===productInOderCard.length)" (click)="onSelectedAll()">
+        <ion-icon class="i-icon" name="apps"></ion-icon>
+      </ion-button> 
+      <ion-button *ngIf="countSelected===productInOderCard.length" (click)="deselectedAllCard()">
+        <fa-icon class="i-icon" [icon]="['fas', 'border-none']"></fa-icon>
+      </ion-button> 
+      <ion-button [disabled]="countSelected<=0" (click)="comfirmDeleteSelected()">
+        <ion-icon class="i-icon" slot="end" name="trash"></ion-icon>
+      </ion-button>       
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" [scrollEvents]="true" [hideHeader]="header">
+  <div class="empty-cart" *ngIf="!loading && productInOderCard.length < 1">
+    <div>
+      <fa-icon cardicon [icon]="['fas', 'shopping-bag']"></fa-icon>
+    </div>
+    <div class="text">
+      Your cart is empty
+    </div>    
+  </div>
+  <ion-list class="list-background" *ngIf="productInOderCard.length >= 1">
+    <ng-container *ngFor="let card of productInOderCard">
+      <ion-item lines="none" class="item-background">
+        <ion-card 
+        long-pressed
+        [delay]=1000
+        (longPressed)="onLongPressed(false, card.mw_code, card.state)"
+        [routerLink]="!isSelectedMode? ['/home/buildOrder', card.mw_code]: null" 
+        (click)="isSelectedMode? onSelectedCard(card.mw_code, card.state) :null"
+        class="i-card-item" 
+        [ngClass]="{ 
+          'inst': card.state == 'instock', 
+          'out': card.state=='outofstock',
+          'discontinued': card.state=='discontinued',
+          'selected': card.state=='selected'
+        }">  
+          <div class="item-title">
+            <ion-text class="card-title">
+              <h4 [ngClass]="{ 
+                'inst': card.state == 'instock', 
+                'out': card.state=='outofstock',
+                'discontinued': card.state=='discontinued'
+              }">{{card.name}}</h4>
+            </ion-text>
+            <ion-button *ngIf="!isSelectedMode" class="rm-btn" fill="clear" (click)="onConfirmRemoveCard($event, card.mw_code)">
+              <ion-icon class="icon-remove" name="close" slot="end"></ion-icon>
+            </ion-button>
+            <ion-button *ngIf="isSelectedMode" class="rm-btn" fill="clear">
+              <fa-icon class="icon-checked" *ngIf="card.state==='selected'" cardicon [icon]="['fas', 'check']"></fa-icon>
+            </ion-button>
+          </div> 
+          <ion-card-content>
+            <div class="cart">
+              <ul class="cartWrap">
+                <li class="items odd nobottomline">
+                  <div class="infoWrap"> 
+                    <div class="cartSection">
+                      <p class="stockStatus stockStatus_textsize" [ngClass]="{ 
+                        'inst': card.state == 'instock', 
+                        'out': card.state=='outofstock',
+                        'discontinued': card.state=='discontinued',
+                        'selected': card.state=='selected'
+                      }">
+                      {{ card.state == "instock" ? "In Stock: " + (+card.stock) : 
+                      card.state == "outofstock" ? "Out of stock" : 
+                      card.state == "discontinued" ? "Discontinued" : 'Selected'
+                      }}
+                      </p>
+                      <br>      
+                      <p *ngIf="(card.state != 'discontinued')"> 
+                        <input
+                        numberMask 
+                        [(ngModel)]="card.qty" 
+                        (ngModelChange)="calcPrice"
+                        (click)="onClickInputQuanity($event)" 
+                        type="number" class="qty" 
+                        [value]="card.qty"
+                        [quantity]="card.qty"
+                        [stock]="card.stock"> &nbsp;&nbsp;x &nbsp; <span class="cartpricesize">${{card.price}}</span>
+                      </p>  
+                      <br>
+                      <p class="itemNumber largerskutext">SKU: {{card.mw_code}}</p>                
+                    </div>  
+                    <div *ngIf="(card.state != 'discontinued')" class="prodTotal cartSection">
+                      ${{ (+card.qty * +card.price) | number: '1.2-2' }}
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div> 
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+    </ng-container>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+	<ion-toolbar class="i-footer">
+    <ion-item (click)="isShowedNote=!isShowedNote">
+      <ion-text slot="end" class="total-text">
+        Cart Total: ${{ calcPrice | number: '1.2-2' }}
+      </ion-text>
+      <ion-icon *ngIf="isShowedNote" name="ios-arrow-down" slot="end"></ion-icon>
+      <ion-icon *ngIf="!isShowedNote" name="ios-arrow-up" slot="end"></ion-icon>
+    </ion-item>
+		<ion-item [ngClass]="isShowedNote? '': 'hide-note'">
+     <ion-col>
+      <ion-row>
+        <ion-text class="total-text">Note: </ion-text>
+      </ion-row>
+      <ion-row>
+        <ion-textarea [formControl]="noteCartText" placeholder="Enter more information here..."></ion-textarea>
+      </ion-row>
+     </ion-col>
+    </ion-item>
+  </ion-toolbar>
+
+  <ion-row>
+    <ion-col>
+      <ion-button [disabled]="isCartUpdated || isOrderSubmitted" color="primary" expand="block" (click)="requestUpdateCart()">
+        <ng-container *ngIf="!isCartUpdated">
+          Update Cart
+        </ng-container>
+        <ion-spinner *ngIf="isCartUpdated" color="light"></ion-spinner>
+      </ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button [disabled]="isCartUpdated || isOrderSubmitted" color="danger" expand="block" (click)="onConfirmSubmitOrder()">
+        <ng-container *ngIf="!isOrderSubmitted">
+          Submit Order
+        </ng-container>
+        <ion-spinner *ngIf="isOrderSubmitted" color="light"></ion-spinner>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

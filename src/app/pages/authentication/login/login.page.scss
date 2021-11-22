@@ -1,0 +1,68 @@
+ion-content {
+  --background: url('/assets/img/bg.jpg') no-repeat center center / cover;
+  .grid-wrapper {
+    height: 100%;
+    .row-wrapper {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      align-items: center;
+
+      img {
+        width: 160px;
+        margin: 20px 20px 50px 20px;
+        padding: 5px 5px 10px 5px;
+      }
+
+      form {
+        ion-item {
+          --background: transparent;
+          ion-label {
+            opacity: 0.3;
+          }
+
+          ion-icon {
+            align-self: center;
+          }
+        }
+        ion-row {
+          ion-col {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            ion-button {
+              width: 90%;
+              margin-top: 20px;
+            }
+            .small-text {
+              margin-top: 20px;
+            }
+          }
+        }
+      }
+      .row-wrapper-social {
+        text-align: center;
+
+        margin-top: 10px;
+        display: flex;
+        flex-direction: row;
+        fa-icon {
+          font-size: 56px;
+          &[facebook] {
+            margin: 10px;
+            color: #3b5998;
+          }
+          &[twitter] {
+            margin: 10px;
+            color: #38a1f3;
+          }
+          &[google] {
+            margin: 10px;
+            color: #d34836;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,41 @@
+<ion-content class="vertical-align-content">
+  <ion-grid class="grid-wrapper">
+    <ion-row class="row-wrapper pushtop">
+      <ion-col>
+        <ion-row>
+          <ion-col class="ion-text-center">
+            <BR>
+            <img src="/assets/img/falls_logo.png" class="ion-align-self-end loginlogo">
+          </ion-col>
+        </ion-row>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <ion-item lines="full">
+            <ion-label position="floating">Email Address</ion-label>
+            <ion-input formControlName="username" type="text" required></ion-input>
+            <ion-icon name="mail" color="primary" slot="start"></ion-icon>
+          </ion-item>
+      
+          <ion-item lines="full">
+            <ion-label position="floating">Password</ion-label>
+            <ion-input formControlName="password" type="password" name="password" required></ion-input>
+            <ion-icon name="lock" color="primary" slot="start"></ion-icon>
+          </ion-item>
+      
+          <ion-row>
+            <ion-col>
+              <ion-button [disabled]="loading" type="submit" color="primary" expand="block">
+                <ng-container *ngIf="!loading">
+                  Sign In
+                </ng-container>
+                <ion-spinner *ngIf="loading" color="light"></ion-spinner>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </form>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+

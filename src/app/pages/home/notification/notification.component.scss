@@ -1,0 +1,30 @@
+ion-content {
+  --background: url('/assets/img/bg.jpg') no-repeat center center / cover;
+}
+.toolbar-background {
+  --background: rgba(255, 255, 255, 1);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 8px 16px 0 rgba(0, 0, 0, 0.09);
+  ion-button {
+    color: rgba(59, 89, 152);
+  }
+  .title-text {
+    color: rgba(59, 89, 152);
+  }
+  .icon {
+    margin: 0 5px 0 0;
+    font-weight: 600;
+  }
+}
+
+ion-content {
+  ion-item {
+    --padding-start: 20px;
+    --inner-padding-end: 20px;
+    ion-label {
+      color: rgba(1, 50, 67, 1);
+    }
+  }
+  .notification-checked {
+    --background: rgba(153, 153, 153, 0.2);
+  }
+}

@@ -1,0 +1,39 @@
+<ion-header no-border>
+  <ion-toolbar class="toolbar-background">
+    <ion-buttons slot="start">
+      <ion-button (click)="sharedService.navigate('back','home')">
+        <ion-icon slot="start" name="ios-arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="title-text">Contact Falls Wholesale</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="vertical-align-content">
+  <ion-grid class="grid-wrapper">
+    <ion-row class="row-wrapper">
+      <ion-col>
+        <ion-row>
+          <ion-col class="ion-text-center">
+            <img (click)="funcShowVer()" src="/assets/img/falls_logo.png" class="ion-align-self-end contactlogo">
+          </ion-col>
+        </ion-row>
+        <BR>
+        <ion-row>
+          <ion-col>
+            <div class="content-wrapper">
+              <div class="content1">
+                We are ready to serve you
+              </div>
+              <div class="content2">
+                Monday - Friday (8:00am - 4:30pm)
+              </div>
+              <div class="contact-button">
+                <ion-button color="primary" expand="block">800-268-4524</ion-button>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

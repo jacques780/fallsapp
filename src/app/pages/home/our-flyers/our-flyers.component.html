@@ -1,0 +1,65 @@
+<ion-header no-border>
+  <ion-toolbar class="toolbar-background">
+    <ion-buttons slot="start">
+      <ion-button (click)="sharedService.navigate('back', 'home')">
+        <ion-icon slot="start" name="ios-arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="title-text">Falls Wholesale Flyer</ion-title>
+  </ion-toolbar>
+  <ion-progress-bar *ngIf="loading" color="primary" [value]="progressValue"></ion-progress-bar>
+</ion-header>
+
+<ion-content overflow-scroll="true">
+  <ion-container *ngIf="!isError">
+    <pdf-viewer [ngClass]="viewPdf"
+      (error)="onError($event)"
+      (on-progress)="onProgress($event)" 
+      [fit-to-page]="true" 
+      [src]="pdfSrc" 
+      [zoom]="pdfZoom"
+      [show-all]="true">
+    </pdf-viewer>
+  </ion-container>
+  <ion-container *ngIf="isError">
+    <div class="pdf-error">
+      No flyer available at this time
+    </div>
+  </ion-container>
+  <div class="pdf-action">
+    <ion-button (click)="viewPdf='horizontal';pdfZoom=1" class="button">
+      <fa-icon cardicon [icon]="['fas', 'grip-horizontal' ]"></fa-icon>
+    </ion-button>
+    <ion-button (click)="viewPdf='vertical';pdfZoom=1" class="button">
+      <fa-icon cardicon [icon]="['fas', 'grip-vertical' ]"></fa-icon>
+    </ion-button>
+    <ion-button (click)="viewPdf='view-double';pdfZoom=0.51" class="button">
+      <fa-icon cardicon [icon]="['fas', 'columns' ]"></fa-icon>
+    </ion-button>
+    <ion-button (click)="viewPdf='view-grid';pdfZoom=0.16" class="button">
+      <fa-icon cardicon [icon]="['fas', 'th' ]"></fa-icon>
+    </ion-button>
+    <ion-button (click)="zoomIn()" class="button">
+      <fa-icon cardicon [icon]="['fas', 'search-plus' ]"></fa-icon>
+    </ion-button>
+    <ion-button (click)="zoomOut()" class="button">
+      <fa-icon cardicon [icon]="['fas', 'search-minus' ]"></fa-icon>
+    </ion-button>
+    <ion-button (click)="viewPdf='vertical';resetZoom()" class="button">
+      <fa-icon cardicon [icon]="['fas', 'undo' ]"></fa-icon>
+    </ion-button>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="selection" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="weekly">
+        <ion-label>Weekly</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="monthly">
+        <ion-label>Monthly</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-footer>

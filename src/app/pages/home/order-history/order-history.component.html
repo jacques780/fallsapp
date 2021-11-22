@@ -1,0 +1,65 @@
+<ion-header no-border #header>
+  <ion-toolbar class="toolbar-background header">
+    <ion-buttons slot="start">
+      <ion-button (click)="sharedService.navigate('back', 'home')">
+        <ion-icon slot="start" name="ios-arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="title-text">Your Order History</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="initOrderHistory()">
+        <ion-icon class="icon refresh" name="refresh"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true" [scrollEvents]="true" [hideHeader]="header">
+  <div class="empty-order-history" *ngIf="!orderHistory">
+    <div>
+      <fa-icon cardicon [icon]="['fas', 'history']"></fa-icon>
+    </div>
+    <div class="text">
+      No order history found.
+    </div>    
+  </div>
+<!-- List of Input Items -->
+  <ion-list class="list-background">
+
+    <ng-container *ngFor="let order of orderHistory">
+      <ion-item lines="none" class="item-background">
+        <ion-card long-pressed [delay]="1000" (longPressed)=onCardHoldPressed($event) class="i-card-item">  
+          <div class="item-title">
+            <ion-text class="card-title">
+              <h4>Order #: {{order.order_id_real}}</h4>
+              <p class="itemNumber">Order Date: {{order.order_date | date: 'MMM. dd, yyyy' }}</p>
+              <p class="itemNumber">Total Items Ordered: {{ +order.total_items  | number: '1.0-2' }}</p>
+            </ion-text>
+            <ion-button class="rm-btn hidethis" fill="clear" (click)="onConfirmRemoveCard($event, order.order_id_real)">
+                <ion-icon class="icon-remove" name="close" slot="end"></ion-icon>
+            </ion-button>
+          </div> 
+          <ion-card-content>
+            <div class="cart">
+              <ul class="cartWrap">
+                <li class="items odd nobottomline">
+                  <div class="infoWrap"> 
+                    <div class="prodTotal cartSection">
+                      <ion-button class="re-order-btn" [disabled]="order.isLoading" color="primary" expand="block" (click)="requestUpdateCart(order)">
+                        <ng-container *ngIf="!order.isLoading">
+                          Order again
+                        </ng-container>
+                        <ion-spinner *ngIf="order.isLoading" color="light"></ion-spinner>
+                      </ion-button>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div> 
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+    </ng-container>
+
+  </ion-list>
+</ion-content>
+

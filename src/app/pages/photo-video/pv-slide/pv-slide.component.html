@@ -1,0 +1,20 @@
+<ion-header translucent class="header">
+  <ion-toolbar class="i-toolbar">
+    <ion-title class="title-text">Photos</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content *ngIf="viewEntered" fullscreen class="slide-wrapper">
+  <ion-slides pager="true" [options]="slideOpts">
+    <ion-slide *ngFor="let item of tiles">      
+        <img *ngIf="!loading" [src]="item.src? 
+          sanitizer.bypassSecurityTrustResourceUrl('data:image/jpeg;base64,' +item.src): item.safeSrc? item.safeSrc: '/assets/img/not-found.jpeg'">>
+        <div class="slide-content-text" >
+          <p *ngIf="!loading">{{item.name}}</p>
+        </div>
+      <ion-spinner *ngIf="loading" color="light" name="crescent"></ion-spinner>
+    </ion-slide>
+  </ion-slides>
+</ion-content>

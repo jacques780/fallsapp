@@ -1,0 +1,96 @@
+ion-content {
+  --background: url('/assets/img/bg.jpg') no-repeat center center / cover;
+}
+.toolbar-background {
+  --background: #3b5998;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 8px 16px 0 rgba(0, 0, 0, 0.09);
+  ion-button {
+    color: whitesmoke;
+  }
+  .title-text {
+    color: whitesmoke;
+  }
+}
+.grid-wrapper {
+  height: 100%;
+  .row-wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    img {
+      width: 160px;
+    }
+
+    form {
+      ion-item {
+        --background: transparent;
+        ion-label {
+          opacity: 0.3;
+        }
+
+        ion-icon {
+          align-self: center;
+        }
+      }
+      ion-row {
+        ion-col {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          ion-button {
+            width: 90%;
+            margin-top: 20px;
+          }
+          .small-text {
+            margin-top: 20px;
+          }
+        }
+      }
+    }
+    .row-wrapper-social {
+      text-align: center;
+
+      margin-top: 10px;
+      display: flex;
+      flex-direction: row;
+      fa-icon {
+        font-size: 56px;
+        &[facebook] {
+          margin: 10px;
+          color: #3b5998;
+        }
+        &[twitter] {
+          margin: 10px;
+          color: #38a1f3;
+        }
+        &[google] {
+          margin: 10px;
+          color: #d34836;
+        }
+      }
+    }
+
+    .content-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .content1 {
+        margin: 5px;
+        font-size: 20px;
+        font-weight: bold;
+        color: rgba(1, 50, 67, 1);
+      }
+      .content2 {
+        margin: 5px;
+        font-size: 15px;
+        color: rgba(1, 50, 67, 1);
+      }
+      .contact-button {
+        margin: 20px 5px 5px 5px;
+      }
+    }
+  }
+}

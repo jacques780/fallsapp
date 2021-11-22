@@ -1,0 +1,7 @@
+{
+  "name": "FallsWholesaleApp",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

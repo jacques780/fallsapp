@@ -1,0 +1,31 @@
+<ion-header no-border #header>
+  <ion-toolbar class="toolbar-background">
+    <ion-buttons slot="start">
+      <ion-button (click)="sharedService.navigate('back','home');">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="title-text">
+      Notifications ({{totalNotification}})
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onMarkAllAsRead()">
+        <fa-icon class="icon" [icon]="['fas', 'check']"></fa-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true" [scrollEvents]="true" [hideHeader]="header">
+  <ion-list>
+    <ng-container *ngFor="let item of notifications">
+      <ion-item (click)="onClickNotification(item.id)" lines="none" [ngClass]="item.checked? 'notification-checked': ''">
+        <ion-label>
+          <h2>{{item.title}}</h2>
+          <p>{{item.content}}</p>
+        </ion-label>
+        <fa-icon *ngIf="item.checked" [icon]="['fas', 'check']"></fa-icon>
+      </ion-item>
+    </ng-container>
+   
+  </ion-list>
+</ion-content>

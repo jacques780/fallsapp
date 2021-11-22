@@ -1,0 +1,106 @@
+.image-modal-view {
+  --background: transparent;
+}
+
+.detailheader
+{
+   margin: 0 auto;
+   width: 100%;
+   text-align: center;
+   font-size: 18px;
+   font-weight: bold;
+}
+
+.pushtop
+{
+   align-items: flex-start !important;
+}
+
+.splashlogo
+{
+   max-width: 300px !important;
+}
+
+.loginlogo
+{
+  width: 240px !important;
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
+
+.cartpricesize
+{
+   font-size: 13.5px !important;
+}
+
+.stockStatus_textsize
+{
+   font-size: 13px !important;
+}
+
+.largerskutext
+{
+   font-size: 13.5px !important;
+}
+
+.nobottomline
+{
+   border-bottom: none !important;
+}
+
+.hidethis
+{
+   display: none !important;
+}
+
+.contactlogo
+{
+  width: 280px !important;
+}
+
+.logobox
+{
+   width: 100%;
+   text-align: center;
+}
+
+.no_top_padd
+{
+   margin-top: 0px !important;
+}
+
+.qtytext
+{
+   font-size: 15px;
+   font-weight: bold;
+}
+
+.smallertoppadd
+{
+   padding-top: 16px !important;
+}
+
+.skuline
+{
+  padding-top: 3px;
+  font-size: 13.5px !important;
+  display: block;
+}
+
+.stocktextline
+{
+   display: block;
+   padding-bottom: 3px !important;
+}
+
+.playername
+{
+   font-size: 22px !important;
+}
+
+.homelogo
+{
+   width: 240px !important;
+   margin: 0 auto !important;
+   display: block;
+}
